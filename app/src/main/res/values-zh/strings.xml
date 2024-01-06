@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HyperOS灵动岛</string>
+    <string name="xposed_state">激活状态</string>
+    <string name="xposed_activated">已激活</string>
+    <string name="xposed_unactivated">未激活</string>
+    <string name="xposed_tip">HOOK提示</string>
+    <string name="dialog_title_tip">提示</string>
+    <string name="art_desktop_icon_isShow">显示桌面图标</string>
+    <string name="art_desktop_icon_title">桌面图标</string>
+    <string name="app_base_set">应用设置</string>
+    <string name="app_edit_ToastStyle">更改灵动样式</string>
+    <string name="app_edit_ToastHide">隐藏灵动额头</string>
+    <string name="app_edit_ToastStyle_summary">启用并修改灵动额头样式</string>
+    <string name="app_edit_ToastHide_summary">设置灵动额头不可见</string>
+    <string name="app_toast_set">灵动设置</string>
+    <string name="app_toast_SetStyle">布局设置</string>
+    <string name="app_toast_SetOther">其他设置</string>
+
+</resources>

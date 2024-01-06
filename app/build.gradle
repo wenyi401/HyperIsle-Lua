@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'androidx.top.hyperos.dynamic'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "androidx.top.hyperos.dynamic"
+        minSdk 34
+        targetSdk 34
+        versionCode 1
+        versionName "24.01.06-demo"
+        multiDexEnabled false
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        config {
+            storeFile file("E:/资料/wenyi.jks")
+            storePassword "wenyi666"
+            keyAlias "wenyi"
+            keyPassword "wenyi666"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            shrinkResources false
+            multiDexEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs/compile_only', include: ['*.jar'])
+    implementation("androidx.preference:preference:1.1.0")
+}
+

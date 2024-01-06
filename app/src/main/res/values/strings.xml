@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HyperIsle</string>
+    <string name="xposed_state">Activated</string>
+    <string name="xposed_activated">Activated</string>
+    <string name="xposed_unactivated">Unactivated</string>
+    <string name="xposed_tip">HOOK TIP</string>
+    <string name="dialog_title_tip">Tip</string>
+    <string name="art_desktop_icon_isShow">Show Icon</string>
+    <string name="art_desktop_icon_title">Desktop Icon</string>
+    <string name="app_base_set">App set</string>
+    <string name="app_edit_ToastStyle">Edit Style</string>
+    <string name="app_edit_ToastHide">Hide Toast</string>
+    <string name="app_edit_ToastStyle_summary">Enable and modify the toast style</string>
+    <string name="app_edit_ToastHide_summary">Set toast to not be visible</string>
+    <string name="app_toast_set">Toast Set</string>
+    <string name="app_toast_SetStyle">Layout settings</string>
+    <string name="app_toast_SetOther">Other settings</string>
+
+</resources>

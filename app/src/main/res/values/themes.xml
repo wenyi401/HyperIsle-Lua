@@ -1,0 +1,24 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="actionOverflowMenuStyle">@style/AppTheme.PopupOverlay.StackOverflow</item>
+        <item name="android:dropDownListViewStyle">@style/AppTheme.DivideLine.MenuLine</item>
+        <item name="android:scrollbarThumbVertical">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay.StackOverflow" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">5dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+    </style>
+
+    <style name="AppTheme.DivideLine.MenuLine" parent="Base.Widget.AppCompat.ListView.DropDown">
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+</resources>

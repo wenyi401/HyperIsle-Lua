@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/round_background_color" />
+    <corners
+        android:bottomLeftRadius="@dimen/round_background_radius"
+        android:bottomRightRadius="@dimen/round_background_radius" />
+    <padding
+        android:bottom="@dimen/preference_category_marginBottom"
+        android:left="@dimen/preference_category_marginLeft"
+        android:right="@dimen/preference_category_marginRight" />
+</shape>
+

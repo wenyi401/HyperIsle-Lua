@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="system_neutral1_800">#2e3133</color>
+    <color name="system_accent1_400">@color/colorPrimary</color>
+    <color name="system_accent3_400">#938cb1</color>
+    <color name="round_background_color">#e6e6e6</color>
+    <color name="preference_category_textColor">#FF9800</color>
+    <color name="toolbar_background_color">@color/colorPrimary</color>
+</resources>
