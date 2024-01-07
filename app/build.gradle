@@ -11,7 +11,7 @@ android {
         minSdk 34
         targetSdk 34
         versionCode 1
-        versionName "24.01.06-demo"
+        versionName "24.01.07-demo"
         multiDexEnabled false
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
