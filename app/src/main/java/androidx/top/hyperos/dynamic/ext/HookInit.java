@@ -6,17 +6,8 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-import luaj.Globals;
-import luaj.lib.jse.JsePlatform;
 
 public class HookInit implements IXposedHookLoadPackage {
-    private Globals globals;
-    private void init() {
-        if (globals!=null) {
-            globals = JsePlatform.standardGlobals();
-        }
-        globals.load("");
-    }
 
     @Override
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {

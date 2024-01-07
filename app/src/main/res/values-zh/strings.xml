@@ -1,4 +1,6 @@
 <resources>
+    <string name="ok">已知晓</string>
+    <string name="cancel">取消</string>
     <string name="app_name">HyperOS灵动岛</string>
     <string name="xposed_state">激活状态</string>
     <string name="xposed_activated">已激活</string>
@@ -15,5 +17,6 @@
     <string name="app_toast_set">灵动设置</string>
     <string name="app_toast_SetStyle">布局设置</string>
     <string name="app_toast_SetOther">其他设置</string>
-
+    <string name="tip_not_permission">没有授权权限无法导入项目和创建项目文件夹</string>
+    <string name="tip_import_project">导入项目可能导致未知bug 只是软件情况不会影响系统 点击已知晓后请杀死并重新进入程序</string>
 </resources>

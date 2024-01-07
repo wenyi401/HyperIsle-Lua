@@ -1,4 +1,6 @@
 <resources>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
     <string name="app_name">HyperIsle</string>
     <string name="xposed_state">Activated</string>
     <string name="xposed_activated">Activated</string>
@@ -15,5 +17,6 @@
     <string name="app_toast_set">Toast Set</string>
     <string name="app_toast_SetStyle">Layout settings</string>
     <string name="app_toast_SetOther">Other settings</string>
-
+    <string name="tip_not_permission">You cant import projects and create project folders without authorization permissions</string>
+    <string name="tip_import_project">Importing items may result in unknown bugs, but the software condition does not affect the system</string>
 </resources>

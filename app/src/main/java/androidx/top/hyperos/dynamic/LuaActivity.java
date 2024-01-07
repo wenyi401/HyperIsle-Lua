@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.os.Message;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +30,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.documentfile.provider.DocumentFile;
 import androidx.top.hyperos.dynamic.ext.Config;
 import androidx.top.hyperos.dynamic.ext.LuaContext;
 import androidx.top.hyperos.dynamic.ext.Tools;
@@ -37,6 +38,7 @@ import androidx.top.hyperos.dynamic.script.LuaLayout;
 import androidx.top.hyperos.dynamic.script.function.loadlayout;
 import androidx.top.hyperos.dynamic.script.function.print;
 import androidx.top.hyperos.dynamic.util.StatusBarUtil;
+import androidx.top.hyperos.dynamic.util.ZipUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,6 +61,7 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
     public String luaInit = Tools.concat(Config.luaDir, "init.lua");
     public String activityName = "main";
     public LinearLayout luaLayout;
+    public Toolbar actionBar;
     private static HashMap<String, LuaActivity> activityMap = new HashMap<>();
     public static Handler luaHandler;
     public TextView luaOutputText;
@@ -87,7 +90,6 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
             sendMsg(e.toString());
         }
     }
-
 
     private void init() {
         Uri data = getIntent().getData();
@@ -120,7 +122,6 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
             }
         }
     }
-
 
     private void initGlobals() {
         globals = JsePlatform.standardGlobals();
@@ -183,7 +184,7 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
     }
 
     private void initToolbar() {
-        Toolbar actionBar = findViewById(R.id.toolbar);
+        actionBar = findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
         if (actionBar != null) {
             actionBar.setSubtitle(isModuleActivated() ? R.string.xposed_activated : R.string.xposed_unactivated);
@@ -191,6 +192,10 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
                     .setTransparentStatusBar()
                     .setStatusBarTextColor(getResources().getBoolean(R.bool.status_bar_mode_night_no));
         }
+    }
+
+    public Toolbar getToolbar() {
+        return this.actionBar;
     }
 
     private void initSize() {
@@ -234,7 +239,7 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
     public void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/zip");
+        intent.setType("application/zip");
         startActivityForResult(intent, Config.READ_REQUEST_CODE);
     }
 
@@ -250,6 +255,26 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
 
     private boolean isModuleActivated() {
         return false;
+    }
+
+    public boolean checkModule() {
+        return isModuleActivated();
+    }
+
+    private void importProject(Context context, Uri file) {
+        Dialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_title_tip)
+                .setMessage(R.string.tip_import_project)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String path = Config.AppDir;
+                        ZipUtil.unzipAndShowDialog(context, file, path);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create();
+        dialog.show();
     }
 
     @Override
@@ -406,21 +431,17 @@ public class LuaActivity extends AppCompatActivity implements ResourceFinder, Lu
                     }
                 } else {
                     new AlertDialog.Builder(getContext())
-                            .setMessage("没有授权权限无法导入项目和创建项目文件夹")
+                            .setMessage(R.string.tip_not_permission)
                             .show();
                 }
             }
 
         }
         if (requestCode == Config.READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri uri = null;
-            if (data != null) {
-                uri = data.getData();
-                DocumentFile file = DocumentFile.fromTreeUri(getContext(), uri);
-                new AlertDialog.Builder(getContext())
-                        .setMessage("导入没写好")
-                        .show();
-                //Log.e("文艺", "Uri: " + uri.toString());
+            if (Environment.isExternalStorageManager()) {
+                Uri uri = data.getData();
+                Log.e("sbsb", uri.toString());
+                importProject(this, uri);
             }
         }
         callFunc("onActivityResult", requestCode, resultCode, data);

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
@@ -52,6 +53,7 @@ public class XposedInfo {
     private static View mStrongToastBottomView;
     private static View mView;
     private static View mCutOut;
+    private static XSharedPreferences sp;
 
     public static XC_LoadPackage.LoadPackageParam getLoad() {
         if (mLpparam != null) {
@@ -85,7 +87,7 @@ public class XposedInfo {
     public static void init() {
         NotifyHelper.init();
         XposedInfo.setDuration(4000);
-        XSharedPreferences sp = Tools.getSharedPreferences("data");
+        sp = Tools.getSharedPreferences("data");
         if (sp != null) {
             if (sp.getBoolean("hide", false)) {
                 reOnPreDrawListener();
@@ -97,65 +99,66 @@ public class XposedInfo {
     }
 
     public static void customStyleToast() {
-        /*
-        XposedHelpers.findAndHookConstructor(
-                findMIUIStrongToast(),
-                Context.class,
-                AttributeSet.class,
-                int.class,
-                new XC_MethodHook() {
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                        XposedHelpers.setBooleanField(param.thisObject, "mShowBottom", false);
-                        setWindowAnimationStyle(0);
-                    }});
+        if (sp.getBoolean("is14", false)) {
+            XposedHelpers.findAndHookConstructor(
+                    findMIUIStrongToast(),
+                    Context.class,
+                    AttributeSet.class,
+                    int.class,
+                    new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                            getArgs(param);
+                        }
+                    });
+        } else {
+            XposedHelpers.findAndHookMethod(
+                    findMIUIStrongToast(),
+                    "showCustomStrongToast",
+                    findStrongToastModel(),
+                    new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        }
+                    });
+        }
+    }
 
-         */
-
-        XposedHelpers.findAndHookMethod(
-                findMIUIStrongToast(),
-                "showCustomStrongToast",
-                findStrongToastModel(),
-                new XC_MethodHook() {
-                    @Override
-                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-
-                        // left
-                        mRLLeft = (RelativeLayout) XposedHelpers.getObjectField(param.thisObject, "mRLLeft");
-                        mLeftContentWithOutText = (FrameLayout) XposedHelpers.getObjectField(param.thisObject, "mLeftContentWithOutText");
-                        mLeftIcon = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mLeftIcon");
-                        mLeftImageView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mLeftImageView");
-                        mLeftTextView = (TextView) XposedHelpers.getObjectField(param.thisObject, "mLeftTextView");
-                        mLeftVideoView = (TextureView) XposedHelpers.getObjectField(param.thisObject, "mLeftVideoView");
-                        // right
-                        mRLRight = (RelativeLayout) XposedHelpers.getObjectField(param.thisObject, "mRLRight");
-                        mRightContentWithOutText = (FrameLayout) XposedHelpers.getObjectField(param.thisObject, "mRightContentWithOutText");
-                        mRightIcon = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mRightIcon");
-                        mRightImageView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mRightImageView");
-                        mRightTextView = (TextView) XposedHelpers.getObjectField(param.thisObject, "mRightTextView");
-                        mRightVideoView = (TextureView) XposedHelpers.getObjectField(param.thisObject, "mRightVideoView");
-                        mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-                        mView = (View) XposedHelpers.getObjectField(param.thisObject, "mView");
-                        mCutOut = (View) XposedHelpers.getObjectField(param.thisObject, "mCutOut");
-                        // mWindowManager = (WindowManager) XposedHelpers.getObjectField(param.thisObject, "mWindowManager");
-                        mDarkToast = (LinearLayout) XposedHelpers.getObjectField(param.thisObject, "mDarkToast");
-                        mDarkToastContent = (ViewGroup) XposedHelpers.getObjectField(param.thisObject, "mDarkToastContent");
-                        mStrongToastBottomView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mStrongToastBottomView");
-                        mScreenWidth = (int) XposedHelpers.getObjectField(param.thisObject, "mScreenWidth");
-                        mScreenHeight = (int) XposedHelpers.getObjectField(param.thisObject, "mScreenHeight");
-                        XposedHelpers.setBooleanField(param.thisObject, "mShowBottom", false);
-                        setWindowAnimationStyle(0);
-                        //checkInit();
-                        mStrongToastBottomView.setVisibility(View.GONE);
-                        //mRightTextView.setVisibility(View.GONE);
-                        initDarkToast();
-                        initDarkToastContent();
-                        unrollAnimations();
-                        initsetValue();
-                        reTextSize();
-                        reConstraint();
-                    }
-                });
+    public static void getArgs(XC_MethodHook.MethodHookParam param) {
+        // left
+        mRLLeft = (RelativeLayout) XposedHelpers.getObjectField(param.thisObject, "mRLLeft");
+        mLeftContentWithOutText = (FrameLayout) XposedHelpers.getObjectField(param.thisObject, "mLeftContentWithOutText");
+        mLeftIcon = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mLeftIcon");
+        mLeftImageView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mLeftImageView");
+        mLeftTextView = (TextView) XposedHelpers.getObjectField(param.thisObject, "mLeftTextView");
+        mLeftVideoView = (TextureView) XposedHelpers.getObjectField(param.thisObject, "mLeftVideoView");
+        // right
+        mRLRight = (RelativeLayout) XposedHelpers.getObjectField(param.thisObject, "mRLRight");
+        mRightContentWithOutText = (FrameLayout) XposedHelpers.getObjectField(param.thisObject, "mRightContentWithOutText");
+        mRightIcon = (Drawable) XposedHelpers.getObjectField(param.thisObject, "mRightIcon");
+        mRightImageView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mRightImageView");
+        mRightTextView = (TextView) XposedHelpers.getObjectField(param.thisObject, "mRightTextView");
+        mRightVideoView = (TextureView) XposedHelpers.getObjectField(param.thisObject, "mRightVideoView");
+        mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
+        mView = (View) XposedHelpers.getObjectField(param.thisObject, "mView");
+        mCutOut = (View) XposedHelpers.getObjectField(param.thisObject, "mCutOut");
+        // mWindowManager = (WindowManager) XposedHelpers.getObjectField(param.thisObject, "mWindowManager");
+        mDarkToast = (LinearLayout) XposedHelpers.getObjectField(param.thisObject, "mDarkToast");
+        mDarkToastContent = (ViewGroup) XposedHelpers.getObjectField(param.thisObject, "mDarkToastContent");
+        mStrongToastBottomView = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mStrongToastBottomView");
+        mScreenWidth = (int) XposedHelpers.getObjectField(param.thisObject, "mScreenWidth");
+        mScreenHeight = (int) XposedHelpers.getObjectField(param.thisObject, "mScreenHeight");
+        XposedHelpers.setBooleanField(param.thisObject, "mShowBottom", false);
+        setWindowAnimationStyle(0);
+        //checkInit();
+        mStrongToastBottomView.setVisibility(View.GONE);
+        //mRightTextView.setVisibility(View.GONE);
+        initDarkToast();
+        initDarkToastContent();
+        unrollAnimations();
+        initsetValue();
+        reTextSize();
+        reConstraint();
     }
 
     public static void reOnPreDrawListener() {
