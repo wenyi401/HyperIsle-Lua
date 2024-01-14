@@ -13,10 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import androidx.top.hyperos.dynamic.BuildConfig;
 import androidx.top.hyperos.dynamic.LuaActivity;
-
-import de.robv.android.xposed.XSharedPreferences;
 
 public class Tools {
     private static final String TAG = "Tools";
@@ -53,9 +50,6 @@ public class Tools {
 
     public static Context getContext() {
         Context context = LuaActivity.context;
-        if (context == null) {
-            context = XposedInfo.mContext;
-        }
         return context;
     }
 
@@ -122,21 +116,6 @@ public class Tools {
         return drawable;
     }
 
-    public static GradientDrawable getShepeBackground(int color, float[] radiu) {
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setColor(color);
-        drawable.setCornerRadii(radiu);
-        return drawable;
-    }
-
-    public static XSharedPreferences getSharedPreferences(String key) {
-        XSharedPreferences sp = new XSharedPreferences(BuildConfig.APPLICATION_ID, key);
-        sp.makeWorldReadable();
-        return sp;
-    }
-
-
     public static WindowManager.LayoutParams getWindowParams() {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -145,13 +124,6 @@ public class Tools {
         //params.setTitle("HyperContentToastView");
         params.gravity = Gravity.CENTER | Gravity.TOP;
         return params;
-    }
-
-    public static GradientDrawable getLineBackground(int color) {
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setCornerRadius(px(5f));
-        drawable.setStroke(px(1f), color);
-        return drawable;
     }
 
     public static int getWidth(Context context) {

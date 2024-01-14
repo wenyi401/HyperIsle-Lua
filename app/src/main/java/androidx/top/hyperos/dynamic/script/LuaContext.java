@@ -1,4 +1,4 @@
-package androidx.top.hyperos.dynamic.ext;
+package androidx.top.hyperos.dynamic.script;
 
 import android.content.Context;
 

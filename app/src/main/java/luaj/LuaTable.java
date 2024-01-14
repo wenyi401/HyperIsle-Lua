@@ -21,93 +21,31 @@
  ******************************************************************************/
 package luaj;
 
-import luaj.compiler.DumpState;
-import luaj.lib.StringLib;
-import luaj.lib.jse.CoerceLuaToJava;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
-/**
- * Subclass of {@link LuaValue} for representing lua tables.
- * <p>
- * Almost all API's implemented in {@link LuaTable} are defined and documented in {@link LuaValue}.
- * <p>
- * If a table is needed, the one of the type-checking functions can be used such as
- * {@link #istable()},
- * {@link #checktable()}, or
- * {@link #opttable(LuaTable)}
- * <p>
- * The main table operations are defined on {@link LuaValue}
- * for getting and setting values with and without metatag processing:
- * <ul>
- * <li>{@link #get(LuaValue)}</li>
- * <li>{@link #set(LuaValue, LuaValue)}</li>
- * <li>{@link #rawget(LuaValue)}</li>
- * <li>{@link #rawset(LuaValue, LuaValue)}</li>
- * <li>plus overloads such as {@link #get(String)}, {@link #get(int)}, and so on</li>
- * </ul>
- * <p>
- * To iterate over key-value pairs from Java, use
- * <pre> {@code
- * LuaValue k = LuaValue.NIL;
- * while ( true ) {
- *    Varargs n = table.next(k);
- *    if ( (k = n.arg1()).isnil() )
- *       break;
- *    LuaValue v = n.arg(2)
- *    process( k, v )
- * }}</pre>
- * <p>
- * <p>
- * As with other types, {@link LuaTable} instances should be constructed via one of the table constructor
- * methods on {@link LuaValue}:
- * <ul>
- * <li>{@link LuaValue#tableOf()} empty table</li>
- * <li>{@link LuaValue#tableOf(int, int)} table with capacity</li>
- * <li>{@link LuaValue#listOf(LuaValue[])} initialize array part</li>
- * <li>{@link LuaValue#listOf(LuaValue[], Varargs)} initialize array part</li>
- * <li>{@link LuaValue#tableOf(LuaValue[])} initialize named hash part</li>
- * <li>{@link LuaValue#tableOf(Varargs, int)} initialize named hash part</li>
- * <li>{@link LuaValue#tableOf(LuaValue[], LuaValue[])} initialize array and named parts</li>
- * <li>{@link LuaValue#tableOf(LuaValue[], LuaValue[], Varargs)} initialize array and named parts</li>
- * </ul>
- *
- * @see LuaValue
- */
+import luaj.compiler.DumpState;
+import luaj.lib.StringLib;
+import luaj.lib.jse.CoerceLuaToJava;
+
 public class LuaTable extends LuaValue implements Metatable {
     private static final int MIN_HASH_CAPACITY = 2;
     private static final LuaString N = valueOf("n");
+    private static volatile Set<LuaTable> dumped = new HashSet<>();
     private final Globals globals;
 
-    /**
-     * the array values
-     */
     protected LuaValue[] array;
-
-    /**
-     * the hash part
-     */
     protected Slot[] hash;
-
-    /**
-     * the number of hash entries
-     */
     protected int hashEntries;
-
-    /**
-     * metatable for this table, or null
-     */
     protected Metatable m_metatable;
     protected boolean mConst;
 
-    /**
-     * Construct empty table
-     */
     public LuaTable() {
         this(null);
     }
@@ -1309,7 +1247,7 @@ public class LuaTable extends LuaValue implements Metatable {
             Varargs n = next(k);
             if ((k = n.arg1()).isnil())
                 break;
-            l.addElement(CoerceLuaToJava.coerce(n.arg(2),Object.class));
+            l.addElement(CoerceLuaToJava.coerce(n.arg(2), Object.class));
         }
         return l;
     }
@@ -1795,4 +1733,5 @@ public class LuaTable extends LuaValue implements Metatable {
     public LuaValue arrayget(LuaValue[] array, int index) {
         return array[index];
     }
+
 }

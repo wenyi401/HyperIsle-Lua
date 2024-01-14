@@ -19,4 +19,6 @@
     <string name="app_toast_SetOther">Other settings</string>
     <string name="tip_not_permission">You cant import projects and create project folders without authorization permissions</string>
     <string name="tip_import_project">Importing items may result in unknown bugs, but the software condition does not affect the system</string>
+    <string name="app_save_success">save success!</string>
+    <string name="lua_version_alert">not version</string>
 </resources>

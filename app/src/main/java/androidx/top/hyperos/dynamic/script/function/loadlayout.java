@@ -1,6 +1,6 @@
 package androidx.top.hyperos.dynamic.script.function;
 
-import androidx.top.hyperos.dynamic.ext.LuaContext;
+import androidx.top.hyperos.dynamic.script.LuaContext;
 import androidx.top.hyperos.dynamic.script.LuaLayout;
 
 import luaj.Globals;

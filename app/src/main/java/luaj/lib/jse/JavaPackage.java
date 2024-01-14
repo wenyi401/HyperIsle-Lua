@@ -1,8 +1,8 @@
 package luaj.lib.jse;
 
-import luaj.LuaValue;
-
 import java.util.HashMap;
+
+import luaj.LuaValue;
 
 /**
  * Created by nirenr on 2020/1/2.
@@ -10,23 +10,25 @@ import java.util.HashMap;
 
 public class JavaPackage extends LuaValue {
     private final String mName;
-    private final HashMap<String,LuaValue> cache=new HashMap<>();
+    private final HashMap<String, LuaValue> cache = new HashMap<>();
+
     public JavaPackage(String name) {
-        mName=name;
+        mName = name;
     }
 
     @Override
     public LuaValue get(String key) {
-        LuaValue ret=cache.get(key);
-        if(ret!=null)
+        LuaValue ret = cache.get(key);
+        if (ret != null) {
             return ret;
-        String name = mName + "." + key;
-        try{
-            ret=JavaClass.forClass(Class.forName(name));
-        } catch (Exception e){
-            ret=new JavaPackage(name);
         }
-        cache.put(key,ret);
+        String name = mName + "." + key;
+        try {
+            ret = JavaClass.forClass(Class.forName(name));
+        } catch (Exception e) {
+            ret = new JavaPackage(name);
+        }
+        cache.put(key, ret);
         return ret;
     }
 
@@ -47,6 +49,6 @@ public class JavaPackage extends LuaValue {
 
     @Override
     public String tojstring() {
-        return "JavaPackage: "+mName;
+        return "JavaPackage: " + mName;
     }
 }

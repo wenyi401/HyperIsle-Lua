@@ -12,8 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 
-import androidx.top.hyperos.dynamic.ext.LuaContext;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

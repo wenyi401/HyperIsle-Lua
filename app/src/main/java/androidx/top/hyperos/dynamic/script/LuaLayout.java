@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import androidx.top.hyperos.dynamic.LuaActivity;
-import androidx.top.hyperos.dynamic.ext.LuaContext;
 import androidx.top.hyperos.dynamic.ext.Tools;
 import androidx.top.hyperos.dynamic.widget.ArrayListAdapter;
 import androidx.top.hyperos.dynamic.widget.ArrayPageAdapter;

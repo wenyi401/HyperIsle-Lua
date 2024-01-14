@@ -19,4 +19,6 @@
     <string name="app_toast_SetOther">其他设置</string>
     <string name="tip_not_permission">没有授权权限无法导入项目和创建项目文件夹</string>
     <string name="tip_import_project">导入项目可能导致未知bug 只是软件情况不会影响系统 点击已知晓后请杀死并重新进入程序</string>
+    <string name="app_save_success">保存成功</string>
+    <string name="lua_version_alert">当前lua版本不适配，或者更低版本</string>
 </resources>

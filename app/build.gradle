@@ -10,8 +10,8 @@ android {
         applicationId "androidx.top.hyperos.dynamic"
         minSdk 34
         targetSdk 34
-        versionCode 1
-        versionName "24.01.07-demo"
+        versionCode 2
+        versionName "24.02.03"
         multiDexEnabled false
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

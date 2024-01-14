@@ -14,11 +14,6 @@ public class ZipUtil {
     public static void unzipAndShowDialog(Context context, Uri zipUri, String targetPath) {
         new Thread(() -> {
             File targetDirectory = new File(targetPath);
-
-            if (targetDirectory.exists()) {
-                deleteRecursive(targetDirectory); // 删除已存在的目录
-            }
-
             targetDirectory.mkdirs(); // 创建目标目录
 
             try (ZipInputStream zipInputStream = new ZipInputStream(context.getContentResolver().openInputStream(zipUri))) {

@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.top.hyperos.dynamic.LuaActivity;
-import androidx.top.hyperos.dynamic.ext.LuaContext;
 import androidx.top.hyperos.dynamic.ext.Tools;
 
 import java.io.IOException;
